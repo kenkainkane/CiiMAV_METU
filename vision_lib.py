@@ -156,7 +156,6 @@ def get_cv(data):
     sd = cv2.meanStdDev(data, mean)[0]
     return sd / mean
 
-
 def adjust_gamma(img_bgr=None, gamma=1):
     if img_bgr is None:
         print('given value to img_bgr argument\n' +
@@ -165,9 +164,7 @@ def adjust_gamma(img_bgr=None, gamma=1):
     invGamma = 1.0 / gamma
     table = np.array([((i / 255.0) ** invGamma) *
                       255 for i in np.arange(0, 256)]).astype("uint8")
-
     return cv2.LUT(img_bgr, table)
-
 
 def adjust_gamma_by_v(img_bgr=None):
     if img_bgr is None:
