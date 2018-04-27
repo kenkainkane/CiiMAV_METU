@@ -66,7 +66,7 @@ def cut_contours(M, w, h, range_w, range_h):
         cx = int(M['m10'] / M['m00'])
         cy = int(M['m01'] / M['m00'])
     except:
-        print 'err'
+        print('err')
     if cx is None:
         return True
     if cx <= range_w or cy <= range_h or cx >= w - range_w or cy >= h - range_h:

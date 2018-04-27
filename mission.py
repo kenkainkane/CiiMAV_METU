@@ -13,8 +13,8 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 cv2.namedWindow('result')
 cap = cv2.VideoCapture(0)
 
-upper = np.array([179, 255, 255])
-lower = np.array([0, 0, 0])
+upper = np.array([122, 188, 255])
+lower = np.array([53, 86, 0])
 
 while True :
     ret, img = cap.read()
@@ -38,14 +38,15 @@ while True :
         center, wh, angle = cv2.minAreaRect(cnt)
         x,y = center
         area = cv2.contourArea(cnt)
-        if area > 2000 :
+        if area > 5000 :
             box = cv2.boxPoints(rect)
             box = np.int0(box)
-            result = cv2.drawContours(frame,[box],0,(0,0,255),2)
-            if count < 1 :
-                imgName = str(time.strftime('%Y_%m_%d_%H_%M'))+'.jpg'
-                cv2.imwrite(imgName, result)
-                count += 1
+            result = cv2.drawContours(result,[box],0,(0,0,255),2)
+            # if count < 1 :
+            imgName = str(time.strftime('%Y_%m_%d_%H_%M'))+'.jpg'
+            print(area)
+            cv2.imwrite(imgName, result)
+                # count += 1
     cv2.imshow('result', result)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
