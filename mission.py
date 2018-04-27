@@ -13,8 +13,8 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 cv2.namedWindow('result')
 cap = cv2.VideoCapture(0)
 
-upper = np.array([122, 188, 255])
-lower = np.array([53, 86, 0])
+upper = np.array([57, 225, 105])
+lower = np.array([46, 154, 34])
 
 while True :
     ret, img = cap.read()
@@ -42,7 +42,9 @@ while True :
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             result = cv2.drawContours(result,[box],0,(0,0,255),2)
-            imgName = str(time.strftime('%Y_%m_%d_%H_%M'))+'.jpg'
+            while count < 10 :
+                imgName = str(time.strftime('%Y_%m_%d_%H_%M_'))+str(count)+'.jpg'
+                count +=1 
             print(area)
             cv2.imwrite(imgName, result)
     cv2.imshow('result', result)
