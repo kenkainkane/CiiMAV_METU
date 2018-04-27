@@ -1,9 +1,10 @@
 import cv2
+import time
 import numpy as np
 from vision_lib import *
 
-frame = cv2.imread('8.jpg')
-frame = cv2.resize(frame, (720, 480))
+frame = cv2.imread('6.jpg')
+frame = cv2.resize(frame, (480, 720))
 result = frame
 
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -36,11 +37,13 @@ while True :
         center, wh, angle = cv2.minAreaRect(c)
         x, y = center
         area = cv2.contourArea(c)
-        if area > 800 :
+        if area > 100 :
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             result = cv2.drawContours(result, [box], 0, (0,0,255), 2)
             cv2.putText(result, str(area), (int(x),int(y)), font, 1, (255,255,0), 1, cv2.LINE_AA)
+        imgName = str(time.strftime('%Y_%m_%d_%H_%M_%S'))+'.jpg'
+        #cv2.imwrite(imgName, result)
         cv2.imshow('mask', mask)
         cv2.imshow('result', result)
     
