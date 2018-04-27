@@ -42,11 +42,9 @@ while True :
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             result = cv2.drawContours(result,[box],0,(0,0,255),2)
-            # if count < 1 :
             imgName = str(time.strftime('%Y_%m_%d_%H_%M'))+'.jpg'
             print(area)
             cv2.imwrite(imgName, result)
-                # count += 1
     cv2.imshow('result', result)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
