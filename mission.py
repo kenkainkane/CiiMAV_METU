@@ -1,6 +1,6 @@
 # CiiMAV METU
 # Author kenkainkane
-# 26th April 2018
+# 27th April 2018
 
 import cv2
 import numpy as np
@@ -26,6 +26,8 @@ while True :
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, lower, upper)
+    kernel = get_kernel('rect', (5, 5))
+    mask = cv2.dilate(mask, kernel)
 
     frame = cv2.bitwise_and(frame, frame, mask=mask)
     frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
@@ -36,7 +38,7 @@ while True :
         cv2.drawContours(frame, cnt, -1, (0,255,0), 1)
         rect = cv2.minAreaRect(cnt)
         center, wh, angle = cv2.minAreaRect(cnt)
-        x,y = center
+        x, y = center
         area = cv2.contourArea(cnt)
         if area > 5000 :
             box = cv2.boxPoints(rect)
