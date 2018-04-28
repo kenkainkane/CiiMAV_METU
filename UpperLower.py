@@ -2,7 +2,7 @@ import yaml
 import io
 
 ## To open file name test.yaml as stream ##
-with open("test.yaml" , 'r') as stream :
+with open("color.yaml" , 'r') as stream :
     data_loaded = yaml.load(stream)
 
 
