@@ -1,4 +1,4 @@
-color_example:
+color:
 
   upper_orange: '0,0,0'
 
@@ -8,32 +8,32 @@ color_example:
 
 
 
-  upper_red: '104,145,89'
+  upper_red: '0,0,0'
 
 
 
-  lower_red: '75,80,59'
+  lower_red: '179,255,255'
 
 
 
-  upper_yellow: '54,222,197'
+  upper_yellow: '27,199,255'
 
 
 
-  lower_yellow: '35,147,158'
+  lower_yellow: '13,123,192'
 
 
 
-  upper_green: '77,185,255'
+  upper_green: '0,0,0'
 
 
 
-  lower_green: '8,156,118'
+  lower_green: '179,255,255'
 
 
 
-  upper_black: '6,185,255'
+  upper_black: '0,0,0'
 
 
 
-  lower_black: '0,181,255'
+  lower_black: '179,255,255'
