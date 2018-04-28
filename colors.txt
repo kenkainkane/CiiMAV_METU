@@ -1,2 +1,0 @@
-lower_yellow : '13,123,192'
-upper_yellow : '27,199,255'
