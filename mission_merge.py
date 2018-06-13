@@ -1,6 +1,8 @@
 # CiiMAV METU
 # Author kenkainkane
 # 4th June 2018
+# Debug ThongtonN.
+# 13rd June 2018
 
 import cv2
 import numpy as np
@@ -22,11 +24,11 @@ imgName = 'None.jpg'
 count = 0
 font = cv2.FONT_HERSHEY_SIMPLEX
 cv2.namedWindow('result')
-cap = cv2.VideoCapture(0) # 0 = Default Camera (1, 2, .. for another)
+cap = cv2.VideoCapture(1) # 0 = Default Camera (1, 2, .. for another)
 
 # HSV Color Space
-upper = np.array([54, 225, 162])
-lower = np.array([23, 141, 49])
+upper = np.array([179, 255, 255])
+lower = np.array([150, 20, 0])
 
 # Main
 while True :
@@ -57,11 +59,12 @@ while True :
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             result = cv2.drawContours(result,[box],0,(0,0,255),2)
-            cv2.putText(result, str(poslat)+','+str(poslon), (0, 0), font, 1, (255, 255, 255), 2)
+            cv2.putText(result, str(poslat)+','+str(poslon), (0, int(r/3.1)), font, 0.40, (255, 255, 255), 1)
             while count < 10 :
                 imgName = str(time.strftime('%Y_%m_%d_%H_%M_'))+str(count)+'.jpg'
                 count +=1 
             print(area)
+	    print(str(poslat)+','+str(poslon))
             cv2.imwrite(imgName, result)
             vehicle.close()
     cv2.imshow('result', result)
