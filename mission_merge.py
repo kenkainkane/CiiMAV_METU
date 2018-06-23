@@ -55,7 +55,7 @@ while True :
         center, wh, angle = cv2.minAreaRect(cnt)
         x, y = center
         area = cv2.contourArea(cnt)
-        if area > 5000 : # Vary , depend on using
+        if area > 5000 : # edit later
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             result = cv2.drawContours(result,[box],0,(0,0,255),2)
