@@ -58,6 +58,8 @@ def main():
         cv2.imshow('mask', mask)
         cv2.imshow('frame', hsv)
         cv2.setMouseCallback('frame', on_mouse_click, hsv)
+        
+        print(lower_hsv, upper_hsv)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
