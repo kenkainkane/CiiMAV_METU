@@ -11,6 +11,7 @@ def on_mouse_click (event, x, y, flags, frame):
         colors.append(frame[y,x].tolist())
 
 def main():
+    global colors
     capture = cv2.VideoCapture(0)
     cv2.namedWindow('image')
 
