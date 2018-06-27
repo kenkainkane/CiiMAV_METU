@@ -54,6 +54,12 @@ def main():
     
         lower_hsv = np.array([ilowH, ilowS, ilowV])
         higher_hsv = np.array([ihighH, ihighS, ihighV])
+        cv2.setTrackbarPos(lowH, image, ilowH)
+        cv2.setTrackbarPos(highH, image, ihighH)
+        cv2.setTrackbarPos(lowS, image, ilowS)
+        cv2.setTrackbarPos(highS, image, ihighS)
+        cv2.setTrackbarPos(lowV, image, ilowV)
+        cv2.setTrackbarPos(highV, image, ihighV)
         mask = cv2.inRange(hsv, lower_hsv, higher_hsv)
         frame = cv2.bitwise_and(frame, frame, mask=mask)
         cv2.imshow('mask', mask)
@@ -68,6 +74,12 @@ def main():
         if cv2.waitKey(1) & 0xFF == ord('c'):
             lower_hsv = np.array([179, 255, 255])
             upper_hsv = np.array([0, 0, 0])
+            cv2.setTrackbarPos(lowH, image, 179)
+            cv2.setTrackbarPos(highH, image, 0)
+            cv2.setTrackbarPos(lowS, image, 255)
+            cv2.setTrackbarPos(highS, image, 0)
+            cv2.setTrackbarPos(lowV, image, 255)
+            cv2.setTrackbarPos(highV, image, 0)
 
     capture.release()
     cv2.destroyAllWindows()
