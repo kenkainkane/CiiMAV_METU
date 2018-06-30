@@ -68,10 +68,10 @@ def main():
         
         print(lower_hsv, upper_hsv)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q'): #Quit
             break
         
-        if cv2.waitKey(1) & 0xFF == ord('c'):
+        if cv2.waitKey(1) & 0xFF == ord('c'): #Reset Trackbar
             ilowH = 179
             ilowS = 255
             ilowV = 255
