@@ -13,9 +13,11 @@ print('Autopilot version: %s'%vehicle.version)
 print('Supports set attitude from companion: %s'%vehicle.capabilities.set_attitude_target_local_ned)
 
 posdata = str(vehicle.location.global_relative_frame).split(':')
-poslat, poslon, _ = posdata[1].split(',')
+poslat, poslon, alt = posdata[1].split(',')
 #- Read the actual position
 print('Position: '+str(poslat)+' '+str(poslon))
+
+print('Altitude:'+str(alt))
 
 vehicle.close()
 print("done")
