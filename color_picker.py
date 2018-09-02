@@ -176,7 +176,7 @@ def main():
 
             #print(colors)
 
-        colors=[]
+        #colors=[]
 
         if cv2.waitKey(1) & 0xFF == ord('q'): #Quit
 
