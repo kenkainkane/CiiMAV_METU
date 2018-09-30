@@ -50,7 +50,7 @@ while True :
         x, y = center
         area = cv2.contourArea(cnt)
 	res_area = area / (r * c)
-        if res_area > 0.003 and res_area < 0.01 : # edit later
+        if res_area > 0.003 and res_area < 0.01 : # ~ 6 metres
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             result = cv2.drawContours(result,[box],0,(0,0,255),2)
