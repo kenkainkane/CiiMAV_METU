@@ -1,0 +1,61 @@
+import cv2
+import sys
+import numpy as np
+import time
+from vision_lib import *
+
+imgName = 'None.jpg'
+count = 0
+font = cv2.FONT_HERSHEY_SIMPLEX
+cv2.namedWindow('result')
+#cap = cv2.VideoCapture(str(sys.argv[1]))
+cap = cv2.VideoCapture(0)
+
+upper = np.array([179, 255, 255])
+lower = np.array([141, 115, 110])
+
+while True :
+    ret, img = cap.read()
+    if img is None :
+        continue
+    r, c, ch = img.shape
+    #frame = cv2.resize(img.copy(), (int(c/3), int(r/3)))
+    cv2.medianBlur(img,9)
+    frame = img
+    result = frame
+
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(hsv, lower, upper)
+    kernel = get_kernel('rect', (5, 5))
+    mask = cv2.dilate(mask, kernel)
+
+    frame = cv2.bitwise_and(frame, frame, mask=mask)
+    frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+    ret,thresh = cv2.threshold(mask,127,255,0)
+    frame, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+
+    for cnt in contours:
+        cv2.drawContours(frame, cnt, -1, (0,255,0), 1)
+        rect = cv2.minAreaRect(cnt)
+        center, wh, angle = cv2.minAreaRect(cnt)
+        x, y = center
+        w, h = wh
+        area = cv2.contourArea(cnt)
+        area_res = area/(r*c)
+        print(area_res)
+        if (w/h) > 0.9 and (w/h) < 1.1 : # config altidude later
+        #if area_res > 0.003 and area_res<0.01 :
+            box = cv2.boxPoints(rect)
+            box = np.int0(box)
+            result = cv2.drawContours(result,[box],0,(0,0,255),2)
+            #cv2.putText(result, str(posalt), (0, 100), font, 1, (255, 255, 255), 2)
+            imgName = str(time.strftime('%Y_%m_%d_%H_%M_'))+str(count)+'.jpg'
+            count +=1 
+            cv2.imwrite(imgName, result)
+    cv2.imshow('result', result)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cv2.destroyAllWindows()
+cv2.VidepCapture(0).release()
+    
