@@ -12,19 +12,17 @@ vehicle = connect(connection_string, baud=baud_rate, wait_ready=True)
 vehicle.wait_ready('autopilot_version')
 """
 def Armed(vehicle):
-	print('........Check Armed........')
-	while True:
+    print('........Check Armed........')
+    while True:
     print(">>>> Change Mode to 'GUIDED' <<<<")
-		vehicle.mode = VehicleMode("GUIDED")
-		
+    vehicle.mode = VehicleMode("GUIDED")		
     print(">>>> ARMED <<<<")
-		vehicle.armed = True
-
-		if vehicle.armed:
-			print(">>>> Already Armed <<<<")
-      break
-		else:
-			continue
+    vehicle.armed = True
+    if vehicle.armed:
+    	print(">>>> Already Armed <<<<")
+      	break
+    else:
+	continue
     time.sleep(2)
 
 def Takeoff(vehicle,alt):
@@ -39,16 +37,16 @@ def Change_Alt(vehicle,alt):
 	posdata = str(vehicle.location.global_relative_frame).split(':')
 	poslat, poslon, Alt = posdata[1].split(',')
 	lat = float(str(poslat)[4:])
-  lon = float(str(poslon)[4:])
-  print(">>>> Change mode to 'GUIDED' <<<<")
-  vehicle.mode = VehicleMode("GUIDED")
-  print(">>>> Going to ALT:"+str(alt)+" <<<<")
-  a_location = LocationGlobalRelative(lat,lon,alt)
-  vehicle.simple_goto(a_location)
-  time.sleep(3)
-  print(">>>> Change mode to 'QLOITER' <<<<")
-  vehicle.mode = VehicleMode("QLOITER")
-  print(">>>> Complete Change ALT <<<<")
+  	lon = float(str(poslon)[4:])
+  	print(">>>> Change mode to 'GUIDED' <<<<")
+  	vehicle.mode = VehicleMode("GUIDED")
+  	print(">>>> Going to ALT:"+str(alt)+" <<<<")
+  	a_location = LocationGlobalRelative(lat,lon,alt)
+  	vehicle.simple_goto(a_location)
+  	time.sleep(3)
+  	print(">>>> Change mode to 'QLOITER' <<<<")
+  	vehicle.mode = VehicleMode("QLOITER")
+  	print(">>>> Complete Change ALT <<<<")
 
 
 def goto(vehicle,lat,lon,alt):
@@ -69,8 +67,20 @@ def land(vehicle):
 
 def get_GPSvalue(vehicle):
 	posdata = str(vehicle.location.global_relative_frame).split(':')
-  poslat, poslon, Alt = posdata[1].split(',')
-  lat = float(str(poslat)[4:])
-  lon = float(str(poslon)[4:])
-	alt = float(str(Alt)[4:])
-  return [lat,lon,alt]
+  	poslat, poslon, Alt = posdata[1].split(',')
+  	lat = float(str(poslat)[4:])
+  	lon = float(str(poslon)[4:])
+    	alt = float(str(Alt)[4:])
+  	return [lat,lon,alt]
+
+def drop(rpm, vehicle):
+	msg = vehicle.message_factory.command_long_encode(
+	0, 0,    # target_system, target_component
+	mavutil.mavlink.MAV_CMD_DO_SET_SERVO, #command
+	0, #confirmation
+	7,    # servo number
+	rpm,          # servo position between 1000 and 2000
+	0, 0, 0, 0, 0)    # param 3 ~ 7 not used
+	# send command to vehicle
+	vehicle.send_mavlink(msg)
+	print('Success')
