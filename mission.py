@@ -6,8 +6,7 @@ import dronekit_sitl
 from vision_lib import *
 from dronekit import connect, VehicleMode
 from pymavlink import mavutil
-import test_goto
-import Servo
+import mission_lib
 
 # Red Value
 upper = np.array([179, 255, 255])
@@ -86,18 +85,18 @@ while True :
     cv2.imshow('result', cv2.resize(result, None, fx=0.5, fy=0.5))
 
     if xRes > 0.05 and xRes < 100 :
-        test_goto.goto(vehicle, poslat,poslon+0.000001,Alt)
+        mission_lib.goto(vehicle, poslat,poslon+0.000001,Alt)
     elif xRes < -0.05 :
-        test_goto.goto(vehicle, poslat,poslon-0.000001,Alt)
+        mission_lib.goto(vehicle, poslat,poslon-0.000001,Alt)
     
     if yRes > 0.05 and yRes < 100 :
-        test_goto.goto(vehicle, poslat-0.000001,poslon,Alt)
+        mission_lib.goto(vehicle, poslat-0.000001,poslon,Alt)
     elif yRes < -0.05 :
-        test_goto.goto(vehicle, poslat+0.000001,poslon,Alt)
+        mission_lib.goto(vehicle, poslat+0.000001,poslon,Alt)
     
     # Drop command 
     if abs(xRes) <= 0.05 and abs(yRes) <= 0.05 :
-        Servo.drop(1800, vehicle)
+        mission_lib.drop(1800, vehicle)
         vehicle.mode = VehicleMode("RTL")
     #Manual Break
     if cv2.waitKey(1) & 0xFF == ord('q'):
