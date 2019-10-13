@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import time 
 from dronekit import connect, VehicleMode
-import dronekit_sitl
 
 connection_string = "/dev/ttyACM0"
 baud_rate = 115200
@@ -27,8 +26,9 @@ while(True):
     ret, frame = cap.read()
     cv2.putText(frame, str(alt),(0,int(frame_height/2.1)),cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255,255,255), 1)
     if ret == True: 
+        print("record..")
         out.write(frame)
-        cv2.imshow('frame',frame)
+        #cv2.imshow('frame',frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     else:
