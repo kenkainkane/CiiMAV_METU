@@ -1,7 +1,8 @@
 import numpy as np
 import cv2
-import sys
+import os
 
+os.system('sudo modprobe bcm2835-v4l2')
 cap = cv2.VideoCapture(0)
 
 while(True):
