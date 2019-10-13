@@ -6,7 +6,7 @@ import dronekit_sitl
 from vision_lib import *
 from dronekit import connect, VehicleMode
 from pymavlink import mavutil
-import mission_lib
+from mission_lib import *
 
 # Red Value
 upper = np.array([179, 255, 255])
@@ -17,9 +17,8 @@ connection_string = "/dev/ttyACM0"
 baud_rate = 115200
 vehicle = connect(connection_string, baud=baud_rate, wait_ready=True)
 vehicle.wait_ready('autopilot_version')
-posdata = str(vehicle.location.global_relative_frame).split(':')
-poslat, poslon, Alt = posdata[1].split(',')
-Alt = Alt[4:]
+poslat, poslon, Alt = get_GPSvalue(vehicle)
+print("LAT : ",poslat,"LON : ",poslon,"ALT : ",Alt)
 
 # CV Variables
 imgName = 'None.jpg'
@@ -54,10 +53,6 @@ while True :
     ret,thresh = cv2.threshold(mask,127,255,0)
     frame, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
-    posdata = str(vehicle.location.global_relative_frame).split(':')
-    poslat, poslon, Alt = posdata[1].split(',')
-    Alt = Alt[4:]
-
     for cnt in contours:
         cv2.drawContours(frame, cnt, -1, (0,255,0), 1)
         rect = cv2.minAreaRect(cnt)
@@ -70,6 +65,7 @@ while True :
         continue
     if float(Alt) < 1.0 :
         continue
+    poslat,poslon,Alt = get_GPSvalue(vehicle)
     if area_res < 0.1056*math.pow(float(Alt)+1,(-1.41))*1.15 and area_res > 0.1056*math.pow(float(Alt)-1,(-1.41))*0.85 :
         if (w/h) > 0.85 and (w/h) < 1.17 :
             xRes = 2*(x - int(c/2))/c
